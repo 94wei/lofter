@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "下载APP",
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "navigation": "/components/navigation/navigation"
+  }
+}

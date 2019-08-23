@@ -1,0 +1,51 @@
+<navigation id='Navigation' show-icon="{{true}}" show-back="{{true}}" title="下载美术世界" show-title="{{true}}" class="" ></navigation>
+
+
+<view style="display: flex;flex-direction: column;justify-content: space-around;align-items: center;height: 280rpx;">
+
+    <view class="f32">
+        欢迎加入美术世界
+    </view>
+
+    <view class="f28">
+        下载APP使用注册手机号首次登录即可获得7天免费会员
+    </view>
+
+    <view class="f28">
+        你可去各大应用商店搜索'美术世界'进行下载
+    </view>
+
+</view>
+
+
+<button open-type="contact">快捷下载美术世界APP 回复1下载</button>
+
+
+
+
+<!--vip特权-->
+
+
+<view style="margin-top: 30rpx;padding: 10rpx">
+    vip免费电子书
+</view>
+
+
+
+<view class="square">
+    <view class="square-inner grid">
+        <view wx:for="{{vipList}}" wx:key style="display: flex;flex-direction: column;margin-bottom: 10rpx;padding: 10rpx;justify-content: space-between;align-items: center">
+
+            <image mode="widthFix"  src="{{item.pic_url+item.size.image_fix_width}}" class="slide-image" style="width: 220rpx;height: 230rpx;border-radius: 10rpx"/>
+
+            <view>
+                {{item.title}}
+            </view>
+
+            <view>
+                {{item.publishing_company}}
+            </view>
+
+        </view>
+    </view>
+</view>

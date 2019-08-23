@@ -1,6 +1,14 @@
 {
+  "navigationBarTitleText": "我的",
   "enablePullDownRefresh": true,
+  "navigationStyle":"custom",
+  "navigationBarTextStyle": "white",
   "usingComponents": {
-    "van-toast": "/miniprogram_npm/vant-weapp/toast/index"
+    "jbj-banner": "/components/banner/banner",
+    "van-card": "/miniprogram_npm/vant-weapp//card/index",
+    "van-notify": "/miniprogram_npm/vant-weapp//notify/index",
+    "van-button": "/miniprogram_npm/vant-weapp//button/index",
+    "van-toast": "/miniprogram_npm/vant-weapp//toast/index",
+    "van-tag": "/miniprogram_npm/vant-weapp//tag/index"
   }
 }

@@ -1,182 +1,196 @@
 // pages/home/home.js
-import create from '../../utils/omi/create'
+const util = require('../../utils/util.js');
+const api = require('../../API/api.js');
+import Toast from '../../miniprogram_npm/vant-weapp/toast/toast';
+import create from '../../utils/create'
 import store from '../../store/store'
-const WXAPI = require('../../API/API')
-const CONFIG = require('../../config.js')
+const app = getApp()
 create(store,{
 
   /**
    * 页面的初始数据
    */
   data: {
-      JieBaoList:[],
-      newTitle:CONFIG.JieBaoTitle,
-      KingList:[],
       banners:[],
-      HomeGood:[],
-      articleList:[], //简章
-      logo:CONFIG.logo,
-      author: CONFIG.author
-
+      page: 0, //分页
+      limit: 5, //每页显示的个数
+      articleList:[]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-        this.getBanner();
-        this.getHomeGoods(CONFIG.ShopId);
-        this.getJieBao(CONFIG.JieBaoId);
-        this.getJianZhangList(CONFIG.JianZhangId)
-        this.getKing();
+      app.fadeInOut(this,'fadeAni',0)
+      this.getBanner();
+      this.getKing();
+      this.getData(false);
   },
 
 
 
-    //获取新闻列表
-    getJianZhangList: function (id) {
-        var that = this;
-        WXAPI.CmsArticleList({
-            categoryId:id,
-            page: 1,
-            pageSize: 3
-        }).then(res=>{
-            that.setData({
-                articleList:res.data,
-            });
-        })
-    },
-
-    clickMoreJianZhang:function(e){
-        wx.navigateTo({
-            url: '/homeSub/pages/news/news?id='+CONFIG.JianZhangId+'&name='+'招生简章'
-        })
-    },
-
-    //获取json king
-    getKing:function(){
-        var that=this
-
-        WXAPI.GetJson({
-            type: 'King',
-        }).then(res=>{
-            that.setData({
-                KingList: res.data[0].jsonData.KING,
-            });
-
-        })
-
+    onPageScroll: function(t) {
+        if(t.scrollTop >= 64){
+            wx.setNavigationBarColor({
+                frontColor: '#000000',
+                backgroundColor: '#ffffff'
+            })
+            app.fadeInOut(this,'fadeAni',1)
+        }else{
+            wx.setNavigationBarColor({
+                frontColor: '#ffffff',
+                backgroundColor: '#ffffff'
+            })
+            app.fadeInOut(this,'fadeAni',0)
+        }
     },
 
 
-    //获取首页捷报新闻信息
-    getJieBao:function(id){
-      var that=this
-        WXAPI.CmsArticleList({
-            categoryId:id,
-            page: 1,
-            pageSize: 5
-        }).then(res=>{
-            that.setData({
-                JieBaoList: res.data,
-            });
+  //  获取状态
+    getData: function ( append) {
+      var that = this;
+        wx.showLoading({
+            "mask": true,
+            "title":'加载中'
         })
-    },
 
+        util.SEND(api.GetHomeDaily,'POST',{
+                user_id:this.store.data.userInfo.admin_id,
+                studio_id:this.store.data.userInfo.studio_id,
+                user_type:this.store.data.userInfo.user_role,
+                page: this.data.page,
+                limit: this.data.limit
+            },res=>{
 
-    getHomeGoods:function(ShopId){
-      var that=this
-        WXAPI.ShopList({
-            shopId:ShopId,
-            page:1,
-            pageSize:5,
-            recommendStatus:1
-        }).then(function (res) {
-            if (res.code == 0) {
-                that.setData({
-                    LOADING: false,
-                    HomeGood:res.data
-                });
+                wx.hideLoading()
+                //判断是否存在data 是否显示底部加载更多
+                if (res.data.data.length===0) {
+                    let newData = { loadingMoreHidden: false }
+                    if (!append) {
+                        newData.articleList = []
+                    }
+                    that.setData(newData);
+                    return
+                }
 
+                //上拉加载触发
+                if (append) {
+                    that.setData({
+                        loadingMoreHidden: true,
+                        articleList: [...that.data.articleList,...res.data.data],
+                    });
+                }else {
+                    that.setData({
+                        loadingMoreHidden: true,
+                        articleList: res.data.data,
+                    });
+                }
+                // 停止下拉动作
+                wx.stopPullDownRefresh();
+            },res=>{
+                console.log(res,'作品列表失败');
             }
-        })
-    },
+        )
 
-    toDetailsTap:function(e){
-        wx.navigateTo({
-            url: '/homeSub/pages/notice/notice?id='+e.currentTarget.dataset.id+'&source='+'goods'
-        })
     },
-
-    //更多班型设置
-    clickMoreBan:function(){
-        console.log(CONFIG.ShopId);
-        wx.navigateTo({
-            url: '/homeSub/pages/BanXingGood/BanXingGood?ShopId='+CONFIG.ShopId
-        })
-    },
-    //分类
+  //  获取广告
     getBanner:function(){
-        WXAPI.HomeBanner().then((res)=>{
+      // 获取广告
+        let params = {
+            studio_id:this.store.data.userInfo.studio_id,
+            user_id:this.store.data.userInfo.admin_id,
+            user_type:this.store.data.userInfo.user_role,
+            code:this.store.data.userInfo.code_number
+        };
+        util.SEND(api.GetBanner,'POST',params,res=>{
+                this.setData({
+                    banners:res.data.data
+                })
+                // 停止下拉动作
+                wx.stopPullDownRefresh();
+            },res=>{
+                console.log(res,'code失败');
+            }
+        )
+    },
 
+    //获取king
+
+    getKing:function(){
+        // 获取广告
+        let params = {
+            user_id:this.store.data.userInfo.admin_id,
+            user_type:this.store.data.userInfo.user_role,
+        };
+
+        util.SEND(api.GetKing,'POST',params,res=>{
             this.setData({
-                banners:res.data
-            })
-        })
-
+                    king:res.data.data
+                })
+                // 停止下拉动作
+                wx.stopPullDownRefresh();
+            },res=>{
+                console.log(res,'code失败');
+            }
+        )
     },
 
 
-  //  点击分类king
+  //  新闻点击
+  clickImage:function(e){
+
+    wx.navigateTo({
+      url: '/homeSub/pages/web/web?url='+encodeURIComponent(e.currentTarget.dataset.url)
+    })
+
+  },
+
+    //点击kiong
+
     clickKing:function(e){
-        console.log(e.currentTarget.dataset.type);
-        wx.navigateTo({
-            url: '/homeSub/pages/news/news?id='+e.currentTarget.dataset.id+'&name='+e.currentTarget.dataset.name
-        })
-    },
-
-    //点击捷报列表
-    clickJB:function(e){
-
-        if(e.currentTarget.dataset.url){
+        if(e.currentTarget.dataset.type==="xwzx"){
             wx.navigateTo({
-                url: '/homeSub/pages/web/web?url='+encodeURIComponent(e.currentTarget.dataset.url)
+              url: '/homeSub/pages/news/news'
             })
-        }else {
+        }else if(e.currentTarget.dataset.type==="hhyj"){
             wx.navigateTo({
-                url: '/homeSub/pages/notice/notice?id='+e.currentTarget.dataset.id
+                url: '/homeSub/pages/result/result'
+            })
+        }else if(e.currentTarget.dataset.type==="bmzx"){
+            wx.navigateTo({
+                url: '/homeSub/pages/schoolHuanJing/schoolHuanJing'
             })
         }
 
     },
 
-  //  more捷报
-    clickMore:function(){
 
+    //预览图片
+    tapBanner:function(e){
+        console.log(e.currentTarget.dataset);
 
-        wx.navigateTo({
-            url: '/homeSub/pages/news/news?id='+CONFIG.JieBaoId+'&name='+'捷报'
+        var newPic=[]
+        e.currentTarget.dataset.pics.forEach((item,index)=>{
+            newPic.push(item.url)
         })
-    },
-
-
-    //  新闻点击
-    clickNews:function(e){
-        if(e.currentTarget.dataset.url){
-            wx.navigateTo({
-                url: '/homeSub/pages/web/web?url='+encodeURIComponent(e.currentTarget.dataset.url)
-            })
-        }else {
-            wx.navigateTo({
-                url: '/homeSub/pages/notice/notice?id='+e.currentTarget.dataset.id
-            })
-        }
-
-
+        wx.previewImage({
+            current: e.currentTarget.dataset.pic,
+            urls: newPic
+        })
 
     },
 
-  /**
+
+    //跳转动态详情
+
+    clickDailyContent:function(e){
+      Toast('下载美术世界APP查看更多')
+        // wx.navigateTo({
+        //     url: '/homeSub/pages/dailyDetail/dailyDetail?id='+e.currentTarget.dataset.id
+        // })
+    },
+
+    /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
@@ -209,34 +223,27 @@ create(store,{
    */
   onPullDownRefresh: function () {
       this.getBanner();
-      this.getHomeGoods(CONFIG.ShopId);
-      this.getJieBao(CONFIG.JieBaoId);
-      this.getJianZhangList(CONFIG.JianZhangId)
       this.getKing();
+      this.setData({
+          page: 0
+      });
+      this.getData(false)
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+      this.setData({
+          page: this.data.page + 1
+      });
+      this.getData(true)
   },
 
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-      return {
-          title: CONFIG.ShareTitle,
-          path: '/pages/home/home',
-          success: function (res) {
-              // 转发成功
 
-          },
-          fail: function (res) {
-              // 转发失败
-          }
-      }
-
-  },
+  }
 })

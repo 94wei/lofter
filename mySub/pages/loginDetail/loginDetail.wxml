@@ -1,0 +1,168 @@
+<!--mySub/pages/loginDetail/loginDetail.wxml-->
+<navigation id='Navigation' show-icon="{{true}}" show-back="{{true}}" title="{{buttonText}}" show-title="{{true}}" class="" ></navigation>
+
+<van-cell-group wx:if="{{isShowWhere==='oneCode'}}">
+    <van-field
+            value="{{ actionCode }}"
+            label="激活码"
+            placeholder="请输入8位激活码"
+            bind:change="onChange"
+    />
+</van-cell-group>
+
+
+<van-cell-group wx:if="{{isShowWhere==='onePhone'}}">
+    <!-- phone -->
+    <van-field
+            type="number"
+            value="{{ phonenumber }}"
+            clearable
+            label="手机号"
+            placeholder="请输入手机号"
+            bind:click-icon="onClickIcon"
+            bind:change="onChangePhone"
+    />
+
+    <!--验证码-->
+
+    <van-field
+            value="{{ sms }}"
+            center
+            clearable
+            type="number"
+            label="验证码"
+            placeholder="请输入短信验证码"
+            use-button-slot
+            bind:change="onChangeSms"
+    >
+        <van-button round slot="button" size="small" type="default" bind:click="sendcode">{{sendCode}}</van-button>
+    </van-field>
+
+</van-cell-group>
+
+
+
+<view wx:if="{{isShowWhere==='two'}}">
+
+    <van-cell-group wx:if="{{isChange}}">
+        <van-field
+                value="{{ actionCode }}"
+                label="激活码"
+                placeholder="请输入8位激活码"
+                bind:change="onChange"
+        />
+    </van-cell-group>
+
+
+    <van-cell-group wx:if="{{isChange===false}}">
+        <!-- phone -->
+        <van-field
+                type="number"
+                value="{{ phonenumber }}"
+                clearable
+                label="手机号"
+                placeholder="请输入手机号"
+                bind:click-icon="onClickIcon"
+                bind:change="onChangePhone"
+        />
+
+        <!--验证码-->
+
+        <van-field
+                value="{{ sms }}"
+                center
+                clearable
+                type="number"
+                label="验证码"
+                placeholder="请输入短信验证码"
+                use-button-slot
+                bind:change="onChangeSms"
+        >
+            <van-button round slot="button" size="small" type="default" bind:click="sendcode">{{sendCode}}</van-button>
+        </van-field>
+
+    </van-cell-group>
+
+
+    <view style="display: flex;flex-direction: row;margin-left: 30rpx;color: white;margin-top: 30rpx" bindtap="clickChangeLogin">
+        用激活码登录
+    </view>
+
+
+</view>
+
+
+<!--分享进入的注册登录-->
+
+
+<view wx:if="{{isShowWhere==='1'}}">
+
+    <van-cell-group wx:if="{{isChange===false}}">
+
+        <!--身份选择-->
+
+        <picker bindchange="bindPickerChange" value="{{index}}" range="{{objectArray}}" range-key="{{'name'}}">
+
+            <view class="pickerSytyle">
+
+                <view style="max-width: 90px;min-width: 90px">
+                    身份选择
+                </view>
+
+                <view style="display: flex;flex-direction: row;justify-content: flex-start;align-items: center">
+                    <view class="van-cell__title van-cell__title">
+                        {{objectArray[index].name}}
+                    </view>
+                    <van-icon name="arrow" size="20rpx" />
+                </view>
+
+            </view>
+
+        </picker>
+
+        <!-- phone -->
+        <van-field
+                type="number"
+                value="{{ phonenumber }}"
+                clearable
+                label="手机号"
+                placeholder="请输入手机号"
+                bind:click-icon="onClickIcon"
+                bind:change="onChangePhone"
+        />
+
+        <!--验证码-->
+
+        <van-field
+                value="{{ sms }}"
+                center
+                clearable
+                type="number"
+                label="验证码"
+                placeholder="请输入短信验证码"
+                use-button-slot
+                bind:change="onChangeSms"
+        >
+            <van-button round slot="button" size="small" type="default" bind:click="sendcode">{{sendCode}}</van-button>
+        </van-field>
+
+    </van-cell-group>
+
+</view>
+
+
+
+
+
+
+<view class="buttonStyle f28" bindtap="clickLogin" bindlongtap="clickLong">
+    {{buttonText}}
+</view>
+
+
+
+
+
+
+<!--toast-->
+<van-toast id="van-toast" />

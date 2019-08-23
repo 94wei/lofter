@@ -1,94 +1,74 @@
 
 
+<view>
 
 
-<!--用户基本信息-->
+    <view style="display: flex;flex-direction: column;width: 100%;height: 550rpx;background-color: #C6A981;justify-content: center;align-items: center;position: relative">
 
-<view style="background-color: white;padding: 20rpx;display: flex;flex-direction: row;justify-content: space-between;align-items: center">
+        <view>
+            <image src="{{store.userInfo.pic_url?store.userInfo.pic_url:'../../img/my.png'}}" style="width: 120rpx;height: 120rpx;border-radius: 60rpx" mode="aspectFit"   />
 
-    <!--姓名签名-->
+            <view bindtap="clickLogin" style="display: flex;flex-direction: column;justify-content: center;align-items: center">
+                <view style="color: white;margin-top: 10rpx;margin-bottom: 10rpx">{{store.userInfo.name?store.userInfo.name:"点击登录"}}</view>
+                <view style="color: white;">{{store.userInfo.user_role==='teacher'?'老师':"未知"}}</view>
+            </view>
 
-    <view style="display: flex;flex-direction: column;">
+        </view>
 
-        <view class="f32" bindtap="clickLogin">{{store.myInfo.nickName?store.myInfo.nickName:"点击登录"}}</view>
+        <!--关注粉丝-->
 
-        <view class="f20 renZheng" bindtap="clickAuthentication">{{store.myInfo.city?store.myInfo.city:'银河'}}</view>
+        <view style="display: flex;flex-direction: row;justify-content: space-around;align-items: center;position: absolute;bottom: 20rpx;width: 100% ">
 
-        <!--<view class="f22">许昌县第一高级中学</view>-->
+            <view style="color: white;">
+                粉丝 {{store.userInfo.admin_id}}
+            </view>
+
+            <view style="color: white;">
+                关注  {{store.userInfo.studio_id}}
+            </view>
+
+        </view>
+
 
     </view>
 
-    <!--头像-->
 
-    <view>
-        <image src="{{store.myInfo.avatarUrl}}" style="width: 120rpx;height: 120rpx;border-radius: 60rpx" mode="aspectFit"   wx:if="{{store.myInfo.avatarUrl}}" />
-        <!--<image src="https://goods2.juancdn.com/bao/160612/3/f/575d68ac151ad1f24c8b457c_800x800.jpg?imageMogr2/thumbnail/310x310!/quality/88!/format/jpg" style="width: 120rpx;height: 120rpx;border-radius: 60rpx" mode="aspectFit"   />-->
+
+
+
+
+
+    <view style="background-color: rgba(245,242,242,1);width: 100%;height: 10rpx"></view>
+
+
+
+
+
+    <view wx:for="{{listCell}}" wx:key data-type="{{item.type}}"   bindtap="clickCell">
+
+        <view style="display: flex;flex-direction: row;justify-content: space-between;align-items: center;height: 100rpx;padding: 20rpx" class="van-hairline--bottom">
+
+            <view style="display: flex;flex-direction: row;justify-content: flex-start;align-items: center;">
+                <text style="color: #444444;font-weight: 400;margin-right: 10rpx">{{item.title}}</text>
+                <i class="iconfont icon-Oval" style="color: red;font-size: 10rpx" wx:if="{{item.isShowRed}}"></i>
+            </view>
+
+            <view style="display: flex;flex-direction: row;justify-content: center;align-items: center;">
+                <text style="margin-right: 20rpx;color:#888888">{{item.subTitle}}</text>
+                <i class="iconfont icon-fanhui" style="color: #878787;font-size: 20rpx"></i>
+            </view>
+
+        </view>
+
     </view>
+
+
+
+
+
+
 
 </view>
-
-
-
-<!--基本数据信息-->
-
-
-<!--
-<view style="display: flex;flex-direction: row;justify-content: space-between;align-items: center;background-color: white;padding: 20rpx">
-
-   <view wx:for="{{MyDataInfo}}" wx:key>
-       <view style="display: flex;flex-direction: column;height: 100rpx;justify-content: space-between;align-items: center">
-           <view class="f32" style="color:#000104;font-weight: 400">{{item.num}}</view>
-           <view class="f28" style="font-weight: 400">{{item.title}}</view>
-       </view>
-   </view>
-
-
-
-</view>
-
--->
-
-
-
-
-
-
-
-<!--我的列表-->
-
-    <view wx:for="{{MyList}}" wx:key wx:for-index="idx" wx:for-item="itemName">
-
-      <view  wx:for="{{itemName}}" wx:key >
-
-          <view class="divider" wx:if="{{index===0}}"></view>
-
-          <view  class="van-hairline--bottom cellTStyle" bindtap="clickCell" data-type="{{item.type}}">
-
-              <view style="display: flex;flex-direction: row;justify-content: flex-start;align-items: center;">
-
-                  <text class="f28" style="color: #000104">{{item.title}}</text>
-                  <i class="iconfont icon-Oval " style="color: red;font-size: 10rpx;margin-left: 10rpx" wx:if="{{item.isShowRed}}"></i>
-              </view>
-
-              <view style="display: flex;flex-direction: row;justify-content: center;align-items: center;">
-                  <text class="f22" style="color: #656565">{{item.subTitle}}</text>
-                  <i class="iconfont icon-fanhui1" style="color: #878787;font-size: 20rpx;margin-left: 10rpx"></i>
-              </view>
-
-          </view>
-
-
-      </view>
-
-    </view>
-
-
-
-
-
-
-
-
 
 
 

@@ -1,5 +1,6 @@
 {
-  "navigationBarTitleText": "登录",
+  "navigationBarTitleText": "登录注册",
+  "enablePullDownRefresh": true,
   "usingComponents": {
     "van-icon": "/miniprogram_npm/vant-weapp/icon/index"
   }

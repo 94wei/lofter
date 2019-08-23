@@ -13,6 +13,7 @@
 		"coverView": true,
 		"nodeModules": true,
 		"autoAudits": false,
+		"uglifyFileName": true,
 		"checkInvalidKey": true,
 		"checkSiteMap": true,
 		"uploadWithSourceMap": true,
@@ -20,13 +21,12 @@
 			"ignore": [],
 			"disablePlugins": [],
 			"outputPath": ""
-		},
-		"uglifyFileName": true
+		}
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.7.2",
 	"appid": "wx9d7fc6d8fbc166e7",
-	"projectname": "shufa",
+	"projectname": "%E7%BE%8E%E6%9C%AF%E4%B8%96%E7%95%8C%E5%B0%8F%E7%A8%8B%E5%BA%8F",
 	"debugOptions": {
 		"hidedInDevtools": []
 	},
@@ -55,10 +55,10 @@
 			"list": [
 				{
 					"id": 0,
-					"name": "分享进入goods详细",
-					"pathName": "homeSub/pages/notice/notice",
-					"query": "source=goods&id= 145050&WeChatShare=WeChat",
-					"scene": 1008
+					"name": "mySub/pages/loginDetail/loginDetail",
+					"pathName": "mySub/pages/loginDetail/loginDetail",
+					"query": "share=1&id=4714&role=10",
+					"scene": 1011
 				}
 			]
 		}

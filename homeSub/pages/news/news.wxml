@@ -1,34 +1,33 @@
 <!--pages/jingyan/jingyan.wxml-->
 
-<wxs src="../../../wxs/subutil.wxs" module="tools" />
+<wxs src="../../../wxs/Time.wxs" module="Time" />
 
-<view class="van-hairline--bottom" wx:for="{{articleList}}" wx:key data-url="{{item.income}}" bindtap="clickNews" data-id="{{item.id}}">
+<view class="van-hairline--bottom" wx:for="{{articleList}}" wx:key data-url="{{item.url}}" bindtap="clickNews">
 
     <view class="container">
         <!--文字标题-->
-        <view style="display: flex;flex-direction: column;justify-content: space-around;align-items: flex-start;height: 240rpx;">
+        <view style="display: flex;flex-direction: column;justify-content: space-between;align-items: flex-start;height: 180rpx;">
+
+            <view style="display: flex;flex-direction: row">
+                <view>
+                    <image src="{{item.thumbnails[0].url}}" style="width: 50rpx;height: 50rpx;border-radius: 25rpx" />
+                </view>
+
+                <view style="color: #635454;margin-left: 10rpx;font-size: 29rpx">
+                    美术世界
+                </view>
+
+                <view style="margin-left: 20rpx">
+                    <i class="iconfont icon-renzheng" style="font-size: 20rpx;margin-right: 10rpx;margin-left: 10rpx"></i>
+
+                    <i class="iconfont icon-yejipaiming" style="font-size: 20rpx;"></i>
+                </view>
+            </view>
 
             <!--标题-->
 
-          <view style="display: flex;flex-direction: column;justify-content: space-between">
-              <view style="color: #3B3B3B;font-size: 28rpx;font-weight: 800;padding-right: 10rpx" >
-                  {{item.title}}
-              </view>
-
-              <view style="color: #656565;font-size: 22rpx;">
-                  {{item.descript}}
-              </view>
-          </view>
-
-
-            <view style="display: flex;flex-direction: row;align-items: center;height: 90rpx;">
-                <view>
-                    <image src="{{logo}}" style="width: 50rpx;height: 50rpx;border-radius: 25rpx" />
-                </view>
-
-                <view style="color: #656565;margin-left: 10rpx;" class="f22">
-                    {{author}}  {{tools.sub(item.dateUpdate)}}
-                </view>
+            <view style="color: #270C0B;height: 100rpx;display: flex;flex-direction: row;align-items: center;font-size: 28rpx;font-weight: bold;" >
+                {{item.name}}
             </view>
 
 
@@ -36,13 +35,15 @@
         </view>
         <!--图片-->
         <view>
-            <image src="{{item.pic}}" style="width: 250rpx;height: 180rpx;border-radius: 7rpx" mode="aspectFill"/>
+            <image src="{{item.thumbnails[0].url}}" style="width: 250rpx;height: 180rpx;border-top-left-radius: 15rpx;border-bottom-right-radius: 15rpx" mode="aspectFill"/>
         </view>
 
     </view>
 
 
-
+    <view style="background-color: white;color: #9C9191;height: 60rpx;display: flex;flex-direction: row;align-items: center;font-size: 28rpx;padding-left: 20rpx;margin-top: -30rpx" >
+        906 浏览  {{Time.formatDate(item.updated_at)}}
+    </view>
 
 </view>
 

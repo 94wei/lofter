@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "选择您的学校",
-  "usingComponents": {
-    "van-icon": "/miniprogram_npm/vant-weapp/icon/index"
-  }
-}

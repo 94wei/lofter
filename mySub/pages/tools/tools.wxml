@@ -1,0 +1,138 @@
+<!--mySub/pages/tools/tools.wxml-->
+
+<van-search
+
+        value="{{ value }}"
+        placeholder="请输入学校名称"
+        use-action-slot
+        bind:search="onSearch"
+        bind:change="onChange"
+>
+    <view slot="action" bind:tap="onSearch">搜索</view>
+</van-search>
+
+
+<view wx:if="{{schoolList.length>0}}">
+    <view  wx:for="{{schoolList}}" wx:key="index">
+
+        <!--老师-->
+
+        <view style="display: flex;flex-direction: row;width: 100%;height: 50rpx;justify-content: center;align-items: center;font-weight: bold;margin-top: 50rpx">
+            {{item.name}}---老师使用情况
+        </view>
+
+
+
+        <view style="background-color: white;padding: 10rpx;margin-top: 10rpx" wx:for="{{item.teacherList}}" wx:for-index="idx" wx:for-item="itemName" wx:key="idx" class="van-hairline--bottom" bindtap="clickCell" data-param="{{itemName.param}}" data-id="{{item.id}}" data-name="{{item.name}}" data-title="{{itemName.title}}">
+            <view style="display: flex;flex-direction: row;justify-content: space-around;align-items: center;height: 100rpx;font-weight: 500;color: #C6A981" >
+
+                <view>{{itemName.title}}</view>
+                <view>{{itemName.number}}</view>
+
+            </view>
+
+            <view style="display: flex;flex-direction: row;justify-content: space-between;height: 100rpx">
+
+                <view style="display: flex;flex-direction: column;justify-content: center;align-items: center" wx:for="{{itemName.otherArray}}" wx:key wx:for-index="idx" wx:for-item="itemThree">
+                    <view>
+                        {{itemThree.title}}
+                    </view>
+
+                    <view>
+                        {{itemThree.number}}
+                    </view>
+                </view>
+
+            </view>
+        </view>
+
+
+
+        <!--学生-->
+
+        <view style="display: flex;flex-direction: row;width: 100%;height: 50rpx;justify-content: center;align-items: center;font-weight: bold;margin-top: 50rpx">
+            {{item.name}}---学生使用情况
+        </view>
+
+
+
+        <view style="background-color: white;padding: 10rpx;margin-top: 10rpx" wx:for="{{item.studentList}}" wx:for-index="idx" wx:for-item="itemName" wx:key="idx" class="van-hairline--bottom" bindtap="clickCell" data-param="{{itemName.param}}" data-id="{{item.id}}" data-name="{{item.name}}"  data-title="{{itemName.title}}">
+            <view style="display: flex;flex-direction: row;justify-content: space-around;align-items: center;height: 100rpx;font-weight: 500;color: #C6A981" >
+
+                <view>{{itemName.title}}</view>
+                <view>{{itemName.number}}</view>
+
+            </view>
+
+            <view style="display: flex;flex-direction: row;justify-content: space-between;">
+
+                <view style="display: flex;flex-direction: column;justify-content: center;align-items: center" wx:for="{{itemName.otherArray}}" wx:key wx:for-index="idx" wx:for-item="itemThree">
+                    <view>
+                        {{itemThree.title}}
+                    </view>
+
+                    <view>
+                        {{itemThree.number}}
+                    </view>
+                </view>
+
+            </view>
+        </view>
+
+
+
+        <view style="background-color: #C6A981;width: 100%;height: 60rpx;margin: 20rpx 0 20rpx 0;display: flex;flex-direction: row;justify-content: center;align-items: center;color: white" wx:if="{{schoolList.length>1}}">
+            ----------我是分割线-----------
+        </view>
+
+
+
+    </view>
+</view>
+
+
+<view wx:else class="nomessage">
+    {{showTitle}}
+</view>
+
+
+
+<!--添加pop-->
+
+<van-popup
+        show="{{ show }}"
+        position="bottom"
+        overlay="{{ true }}"
+        bind:close="onClose"
+>
+
+    <view style="display: flex;flex-direction: column;justify-content: space-around;align-items: center;width: 100%;height: 400rpx">
+
+        <view>{{title}}</view>
+
+        <van-stepper value="{{ 1 }}"  bind:change="onChangenumber" />
+
+        <van-field
+                value="{{ miyao }}"
+                required
+                clearable
+                label="秘钥"
+                placeholder="请输入秘钥"
+                bind:change="onChangemiYao"
+        />
+
+
+        <view bindtap="clickOk">
+            立即提交
+        </view>
+
+    </view>
+
+
+
+</van-popup>
+
+
+
+<!--toast-->
+<van-toast id="van-toast" />

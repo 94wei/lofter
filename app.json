@@ -2,38 +2,27 @@
   "pages": [
     "pages/home/home",
     "pages/my/my",
-    "pages/about/about",
-    "pages/BaoMing/BaoMing",
-    "pages/school/school"
+    "pages/display/display",
+    "pages/demo/demo"
   ],
-  "permission": {
-    "scope.userLocation": {
-      "desc": "你的位置信息将用于小程序位置接口的效果展示"
-    }
-  },
   "subPackages": [
     {
       "root": "homeSub",
       "pages": [
         "pages/web/web",
         "pages/news/news",
-        "pages/notice/notice",
-        "pages/teacher/teacher",
-        "pages/BanXingGood/BanXingGood",
-        "pages/YuYue/YuYue"
+        "pages/result/result",
+        "pages/schoolHuanJing/schoolHuanJing",
+        "pages/dailyDetail/dailyDetail"
       ]
     },
     {
       "root": "mySub",
       "pages": [
         "pages/login/login",
-        "pages/Authentication/Authentication",
-        "pages/indexes/indexes",
-        "pages/FAV/FAV",
-        "pages/gongGao/gongGao",
-        "pages/schoolMap/schoolMap",
-        "pages/bindmobile/bindmobile",
-        "pages/freeCard/freeCard"
+        "pages/loginDetail/loginDetail",
+        "pages/tools/tools",
+        "pages/welArt/welArt"
       ]
     }
   ],
@@ -49,14 +38,14 @@
   "window": {
     "backgroundTextStyle": "dark",
     "backgroundColor": "#fff",
-    "navigationBarBackgroundColor": "#FFF",
+    "navigationBarBackgroundColor": "#C6A981",
     "navigationBarTitleText": "美术世界",
-    "navigationBarTextStyle": "black",
+    "navigationBarTextStyle": "white",
     "onReachBottomDistance": 50
   },
   "tabBar": {
     "color": "#858585",
-    "selectedColor": "#3B3B3B",
+    "selectedColor": "#fecfac",
     "backgroundColor": "#ffffff",
     "borderStyle": "white",
     "list": [
@@ -67,27 +56,9 @@
         "text": "首页"
       },
       {
-        "pagePath": "pages/school/school",
-        "iconPath": "img/school.png",
-        "selectedIconPath": "img/schooling.png",
-        "text": "校区"
-      },
-      {
-        "pagePath": "pages/about/about",
-        "iconPath": "img/kefu.png",
-        "selectedIconPath": "img/kefuing.png",
-        "text": "客服"
-      },
-      {
-        "pagePath": "pages/BaoMing/BaoMing",
-        "iconPath": "img/adding.png",
-        "selectedIconPath": "img/add.png",
-        "text": "报名"
-      },
-      {
         "pagePath": "pages/my/my",
-        "iconPath": "img/me.png",
-        "selectedIconPath": "img/meing.png",
+        "iconPath": "img/my.png",
+        "selectedIconPath": "img/mying.png",
         "text": "我的"
       }
     ]

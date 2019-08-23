@@ -1,0 +1,4 @@
+<!--pages/demo/demo.wxml-->
+<text>
+    {{store.userInfo.name}}
+</text>

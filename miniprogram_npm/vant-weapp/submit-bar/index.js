@@ -8,16 +8,10 @@ VantComponent({
         'button-class'
     ],
     props: {
-        tip: {
-            type: null,
-            observer: 'updateTip'
-        },
+        tip: null,
         tipIcon: String,
         type: Number,
-        price: {
-            type: null,
-            observer: 'updatePrice'
-        },
+        price: null,
         label: String,
         loading: Boolean,
         disabled: Boolean,
@@ -32,22 +26,22 @@ VantComponent({
         },
         decimalLength: {
             type: Number,
-            value: 2,
-            observer: 'updatePrice'
+            value: 2
+        }
+    },
+    computed: {
+        hasPrice() {
+            return typeof this.data.price === 'number';
         },
-        suffixLabel: String
+        priceStr() {
+            return (this.data.price / 100).toFixed(this.data.decimalLength);
+        },
+        tipStr() {
+            const { tip } = this.data;
+            return typeof tip === 'string' ? tip : '';
+        }
     },
     methods: {
-        updatePrice() {
-            const { price, decimalLength } = this.data;
-            this.set({
-                hasPrice: typeof price === 'number',
-                priceStr: (price / 100).toFixed(decimalLength)
-            });
-        },
-        updateTip() {
-            this.set({ hasTip: typeof this.data.tip === 'string' });
-        },
         onSubmit(event) {
             this.$emit('submit', event.detail);
         }

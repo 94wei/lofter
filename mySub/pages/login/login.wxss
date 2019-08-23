@@ -1,23 +1,17 @@
-form {
-  width:750rpx;
+/* pages/login/login.wxss */
+page{
+background-color: #C6A981;
+/*background-color: red;*/
 }
-.logo {
-  width:200rpx;
-  margin-top:180rpx;
-  margin-left:275rpx;
-}
-.title {
-  text-align: center;
-  margin-top:70rpx;
-}
-.profile {
-  text-align: center;
-  margin-top:30rpx;
-  font-size: 14px;
-  color:#888;
-}
-.mini-btn{
-  margin-top: 50rpx;
-  margin-left: 50px;
-  margin-right: 50px;
+
+.buttonStyle{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 360rpx;
+    height: 80rpx;
+    border-radius: 40rpx;
+    background-color: white;
+    color: #C6A981
 }

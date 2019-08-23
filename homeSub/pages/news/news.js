@@ -1,93 +1,81 @@
 // pages/jingyan/jingyan.js
-
-import create from '../../../utils/omi/create'
+const util = require('../../../utils/util.js');
+const api = require('../../../API/api.js');
+import create from '../../../utils/create'
 import store from '../../../store/store'
-const WXAPI = require('../../../API/API')
-const CONFIG = require('../../../config.js')
 create(store,{
   /**
    * 页面的初始数据
    */
   data: {
-      page: 1, //分页
-      pageSize: 10, //每页显示的个数
-      articleList:[],
-      author:CONFIG.author,
-      logo:CONFIG.logo
+      page: 0, //分页
+      limit: 10, //每页显示的个数
+      articleList:[]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-      wx.setNavigationBarTitle({
-          title: options.name
-      })
-      this.getData(false,options.id);
-      this.setData({
-          id:options.id
-      })
+        this.getData(false);
   },
 
     //获取新闻列表
-    getData: function ( append,id) {
+    getData: function ( append) {
         var that = this;
         wx.showLoading({
             "mask": true,
             "title":'加载中'
         })
 
-        WXAPI.CmsArticleList({
-            categoryId:id,
+        util.SEND(api.GetKingContent,'POST',{
+            name:'NewList',
+            user_id:this.store.data.userInfo.admin_id,
+            studio_id:this.store.data.userInfo.studio_id,
+            user_type:this.store.data.userInfo.user_role,
             page: this.data.page,
-            pageSize: this.data.pageSize
-        }).then(res=>{
-
+            limit: this.data.limit
+            },res=>{
+            console.log(res.data.data.list,"list");
             wx.hideLoading()
-            //判断是否存在data 是否显示底部加载更多
-            if (res.code===700) {
-                let newData = { loadingMoreHidden: false }
-                if (!append) {
-                    newData.articleList = []
+                //判断是否存在data 是否显示底部加载更多
+                if (res.data.data.list.length===0) {
+                    let newData = { loadingMoreHidden: false }
+                    if (!append) {
+                        newData.articleList = []
+                    }
+                    that.setData(newData);
+                    return
                 }
-                that.setData(newData);
-                return
+
+                //上拉加载触发
+                if (append) {
+                    that.setData({
+                        loadingMoreHidden: true,
+                        articleList: [...that.data.articleList,...res.data.data.list],
+                    });
+                }else {
+                    that.setData({
+                        loadingMoreHidden: true,
+                        articleList: res.data.data.list,
+                    });
+                }
+                // 停止下拉动作
+                wx.stopPullDownRefresh();
+            },res=>{
+                console.log(res,'作品列表失败');
             }
-
-            //上拉加载触发
-            if (append) {
-                that.setData({
-                    loadingMoreHidden: true,
-                    articleList: [...that.data.articleList,...res.data],
-                });
-            }else {
-                that.setData({
-                    loadingMoreHidden: true,
-                    articleList: res.data,
-                });
-            }
-            // 停止下拉动作
-            wx.stopPullDownRefresh();
-
-        })
-
+        )
 
     },
 
 
   //  新闻点击
     clickNews:function(e){
-        if(e.currentTarget.dataset.url){
-            wx.navigateTo({
-                url: '/homeSub/pages/web/web?url='+encodeURIComponent(e.currentTarget.dataset.url)
-            })
-        }else {
-            wx.navigateTo({
-                url: '/homeSub/pages/notice/notice?id='+e.currentTarget.dataset.id
-            })
-        }
-
-
+        console.log(e,"xxxx");
+        wx.navigateTo({
+            url: '/homeSub/pages/web/web?url='+encodeURIComponent(e.currentTarget.dataset.url)
+        })
 
     },
 
@@ -126,7 +114,7 @@ create(store,{
       this.setData({
           page: 0
       });
-      this.getData(false,this.data.id)
+      this.getData(false)
   },
 
   /**
@@ -136,7 +124,7 @@ create(store,{
       this.setData({
           page: this.data.page + 1
       });
-      this.getData(true,this.data.id)
+      this.getData(true)
   },
 
   /**

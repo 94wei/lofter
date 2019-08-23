@@ -1,33 +1,21 @@
 /*navbar*/
 
 @import "/miniprogram_npm/vant-weapp/common/index.wxss";
-@import "../../app.wxss";
-@import "../../iconFont/iconFont.wxss";
+@import "../../iconfont/index.wxss";
 
 
-/*cell*/
-
-.cellTStyle{
+.topMy{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    height: 70rpx;
-    padding: 10rpx 20rpx 10rpx 20rpx
+    height: 100rpx;
+    padding: 20rpx;
 }
 
+/*cell*/
 
-/*认证*/
-.renZheng{
-    background: #656565;
-    width: 140rpx;
-    height: 40rpx;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    display: flex;
-    color: white;
-    border-radius:60rpx;
-    margin-top: 20rpx
+.cellTStyle{
+    font-weight: bold;
 }
 

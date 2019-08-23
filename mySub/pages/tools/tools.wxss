@@ -1,0 +1,6 @@
+/* mySub/pages/tools/tools.wxss */
+@import "/miniprogram_npm/vant-weapp/common/index.wxss";
+
+.nomessage{
+    display: flex;flex-direction: column;justify-content: center;align-items: center;font-size: 24rpx;color: #999999;position: fixed;width: 100%;height: 60%
+}

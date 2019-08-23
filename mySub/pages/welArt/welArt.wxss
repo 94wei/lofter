@@ -1,0 +1,17 @@
+/* mySub/pages/welArt/welArt.wxss */
+@import "/app.wxss";
+
+.grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 相当于 1fr 1fr 1fr */
+    grid-template-rows: repeat(3, 1fr); /* fr单位可以将容器分为几等份 */
+    grid-gap: 1%; /* grid-column-gap 和 grid-row-gap的简写 */
+    grid-auto-flow: row;
+}
+.grid>div{
+    color: #fff;
+    font-size: 50px;
+    line-height: 2;
+    text-align: center;
+    background: linear-gradient(to bottom, #f5f6f6 0%,#dbdce2 21%,#b8bac6 49%,#dddfe3 80%,#f5f6f6 100%);
+}

@@ -1,0 +1,42 @@
+<!--homeSub/pages/dailyDetail/dailyDetail.wxml-->
+<!--状态列表-->
+<view style="padding: 20rpx"  class="van-hairline--bottom" >
+    <!--头像基本信息-->
+    <view style="display: flex;flex-direction: row;background-color: white;width: 100%;height: 80rpx;margin-bottom: 10rpx" >
+
+        <view style="margin-right: 20rpx">
+            <image mode="widthFix"  src="{{dailyDetail.avatar}}" class="slide-image" style="width: 80rpx;height: 80rpx;border-radius: 10rpx"/>
+        </view>
+
+        <view style="display: flex;flex-direction: column;justify-content: space-between;">
+            <view style="display: flex;flex-direction: row;width: 240rpx;justify-content: space-between">
+                <view>{{dailyDetail.name}}</view>
+                <view style="color: rgba(247,153,40,1)">{{dailyDetail.status}}</view>
+                <view style="color: rgba(48,198,139,1)">{{dailyDetail.is_activating?"已激活":"未激活"}}</view>
+            </view>
+            <view>6天前</view>
+        </view>
+
+    </view>
+
+    <!--文字-->
+
+    <view style="margin-bottom: 10rpx" data-id="{{itemName.id}}" bindtap="clickDailyContent">
+        {{dailyDetail.content}}
+    </view>
+
+    <!--图片-->
+    <view style="display: flex;flex-direction: row;flex-wrap: wrap;justify-content: space-between">
+
+        <view  wx:for="{{dailyDetail.image_url_came_thumb}}" wx:key="{{index}}" >
+
+            <view bindtap="tapBanner"  data-pic="{{articleList[idx].image_url_came[index].url}}"  data-pics="{{itemName.image_url_came}}" data-idx="{{idx}}">
+                <image mode="widthFix"  src="{{item.url}}" class="slide-image" style="width: 230rpx;height: 230rpx;border-radius: 10rpx"/>
+            </view>
+
+        </view>
+
+    </view>
+
+
+</view>

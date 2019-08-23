@@ -1,0 +1,26 @@
+<!--homeSub/pages/schoolHuanJing/schoolHuanJing.wxml-->
+
+
+
+<van-tabs sticky swipeable  bind:change="tabClick" active="{{ active }}" color="#C6A981" z-index="999" border="false">
+    <van-tab title="{{item.name}}" wx:for="{{menu}}" wx:key>
+
+
+        <view class="goods-container">
+            <view class="goods-box" wx:for="{{articleList}}" wx:key="{{index}}" bindtap="tapBanner" data-pic="{{articleList[index].pic_url}}">
+                <view class="img-box">
+                    <image src="{{item.pic_url}}" class="image" mode="aspectFill" lazy-load="{{true}}"/>
+                </view>
+                <text class="text">{{item.content}}</text>
+            </view>
+        </view>
+
+
+    </van-tab>
+
+</van-tabs>
+
+<view hidden="{{loadingMoreHidden ? true : false}}" class="no-more-goods">--END--</view>
+
+
+

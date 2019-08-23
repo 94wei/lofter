@@ -28,7 +28,6 @@ Component({
     methods:{
         //滑动banner事件处理函数
         swiperchange: function (e) {
-          
             this.setData({
                 swiperCurrent: e.detail.current
             })
@@ -36,17 +35,9 @@ Component({
 
     //    ad 点击
         tapBanner: function (e) {
-
-            if(e.currentTarget.dataset.type==='ad'){
-                wx.navigateTo({
-                    url: '/homeSub/pages/notice/notice?id='+e.currentTarget.dataset.id+'&source='+'DANYE'
-                })
-            }else {
-                wx.navigateTo({
-                    url: '/homeSub/pages/web/web?url='+encodeURIComponent(e.currentTarget.dataset.url)
-                })
-            }
-
+          wx.navigateTo({
+            url: '/homeSub/pages/web/web?url='+encodeURIComponent(e.currentTarget.dataset.url)
+          })
 
 
         }

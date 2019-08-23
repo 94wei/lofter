@@ -1,11 +1,15 @@
-<!--index.wxml-->
+<!--pages/login/login.wxml-->
+
+
+<view style="display: flex;flex-direction: column;justify-content: space-around;align-items: center;width: 100%;height: 60%;position: absolute">
+
+
+    <!--<image mode="widthFix"  src="../../../img/logo.jpg" style="width: 200rpx;height: 200rpx"/>-->
+
+    <view class="buttonStyle" bindtap="clickButton" wx:for="{{role}}" wx:key data-id="{{item.id}}" data-landing="{{item.landing}}" data-type="{{item.type}}" data-share="{{item.share}}">
+        {{item.title}}
+    </view>
 
 
 
-<view class="container">
-  <form bindsubmit="bindSave">
-    <view class="title">微信授权页面</view>
-    <view class="profile">授权并同意使用微信账号登录当前小程序</view>
-    <button type="primary" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo" class="weui-btn mini-btn" lang="zh_CN" >授权登录</button>
-  </form>
 </view>

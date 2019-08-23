@@ -1,4 +1,0 @@
-/* pages/school/school.wxss */
-@import "/miniprogram_npm/vant-weapp/common/index.wxss";
-@import "../../iconFont/iconFont.wxss";
-@import "../../app.wxss";

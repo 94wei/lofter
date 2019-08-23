@@ -1,12 +1,10 @@
 export default {
     data: {
-        name: '待开发',
-        userInfo:{
-            name:'请登录'
-        },
-        myInfo:{
-            nickName:'请登录',
-            avatarUrl:''
+        userInfo: {
+            admin_id:4027,
+            user_role:'teacher',
+            studio_id:183,
+          code_number:'zhao0183',
         }
     }
 }
